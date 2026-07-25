@@ -1,4 +1,4 @@
-# Clinical Trial Data Model — CDISC SDTM Aligned
+# Clinical Trial Data Model = CDISC SDTM Aligned
 
 ## Overview
 
@@ -37,7 +37,7 @@ Per the SDTM standard and SAS V5 transport file (XPT) format requirements:
 
 ## Source Entities (Raw)
 
-### 1. DM — Demographics (Special Purpose Domain)
+### 1. DM: Demographics (Special Purpose Domain)
 
 DM is a special-purpose domain with a fixed structure. One record per subject.
 
@@ -73,7 +73,7 @@ DM is a special-purpose domain with a fixed structure. One record per subject.
 
 ---
 
-### 2. AE — Adverse Events (Events Class)
+### 2. AE: Adverse Events (Events Class)
 
 Variable order: Identifiers → Topic → Qualifiers → Timing. One record per adverse event per subject.
 
@@ -97,7 +97,7 @@ Variable order: Identifiers → Topic → Qualifiers → Timing. One record per 
 
 ---
 
-### 3. LB — Laboratory Test Results (Findings Class)
+### 3. LB: Laboratory Test Results (Findings Class)
 
 Variable order: Identifiers → Topic → Qualifiers → Timing. One record per lab test per visit per subject.
 
@@ -126,7 +126,7 @@ Variable order: Identifiers → Topic → Qualifiers → Timing. One record per 
 
 ---
 
-### 4. SV — Subject Visits (Special Purpose Domain)
+### 4. SV: Subject Visits (Special Purpose Domain)
 
 SV is a special-purpose domain. One record per subject per actual visit.
 
@@ -150,7 +150,7 @@ SV is a special-purpose domain. One record per subject per actual visit.
 
 ---
 
-### 5. TS — Trial Summary (Trial Design Domain)
+### 5. TS: Trial Summary (Trial Design Domain)
 
 One record per trial summary parameter.
 
