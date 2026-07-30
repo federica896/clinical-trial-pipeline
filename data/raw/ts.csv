@@ -1,0 +1,19 @@
+STUDYID,DOMAIN,TSSEQ,TSPARMCD,TSPARM,TSVAL
+ONCO-2024-001,TS,1,SSTDTC,Study Start Date,2024-01-15
+ONCO-2024-001,TS,2,SENDTC,Study End Date,2025-01-15
+ONCO-2024-001,TS,3,TITLE,Study Title,MERIDIAN-3: A Phase III Study of Compound X and Compound Y vs Placebo in Advanced Solid Tumors
+ONCO-2024-001,TS,4,PHASE,Trial Phase Classification,PHASE III TRIAL
+ONCO-2024-001,TS,5,INDIC,Trial Disease/Condition Indication,Locally advanced or metastatic solid tumors
+ONCO-2024-001,TS,6,TRT,Investigational Therapy or Treatment,Compound X 200mg BID; Compound Y 150mg QD
+ONCO-2024-001,TS,7,CTRL,Control Type,PLACEBO
+ONCO-2024-001,TS,8,RANDOM,Trial Is Randomized,Y
+ONCO-2024-001,TS,9,STYPE,Study Type,INTERVENTIONAL
+ONCO-2024-001,TS,10,BLIND,Trial Blinding Schema,DOUBLE BLIND
+ONCO-2024-001,TS,11,PLTEFPS,Planned Number of Subjects,900
+ONCO-2024-001,TS,12,PCNTRY,Planned Country of Investigational Sites,USA; GBR; DEU; JPN; CAN
+ONCO-2024-001,TS,13,REGID,Registry Identifier,NCT06000001
+ONCO-2024-001,TS,14,OBJPRIM,Trial Primary Objective,Compare overall survival of Compound X and Compound Y vs Placebo
+ONCO-2024-001,TS,15,ADDON,Added on to Existing Treatments,N
+ONCO-2024-001,TS,16,STOPRULE,Study Stop Rules,Futility at 50% OS events (Lan-DeMets O'Brien-Fleming)
+ONCO-2024-001,TS,17,ACESSION,Accession Number,IND 123456
+ONCO-2024-001,TS,18,SPONSOR,Clinical Study Sponsor,"Meridian Therapeutics, Inc."

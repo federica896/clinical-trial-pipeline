@@ -1,3 +1,11 @@
+"""
+DM (Demographics) domain generator.
+
+Generates one record per screened subject (1200 total) with site assignment,
+randomisation, screen failure/discontinuation simulation, and demographic
+attributes. All other generators depend on the output of this domain.
+"""
+
 from datetime import datetime, timedelta, date 
 from dateutil.relativedelta import relativedelta
 import random 
@@ -52,6 +60,7 @@ class DemographicsGenerator(BaseGenerator):
         
 
     def _assign_arms(self):
+        """Randomize subject to treatment arm (2:2:1 ratio)"""
         record = {}
         selected = self.rng.choices(TREATMENT_ARMS, weights=RANDOMIZATION_RATIO, k=1)[0]
         record["ARMCD"] = selected["armcd"]
@@ -60,6 +69,15 @@ class DemographicsGenerator(BaseGenerator):
 
 
     def generate(self):
+        """Generate DM records for all screened subjects.
+
+        Per subject:
+          1. Assign demographics (age, sex, race, ethnicity)
+          2. Screen failure? (25%) → no arm, no treatment dates
+          3. Enrolled → randomise to arm
+          4. Discontinued? (15%) → early RFENDTC
+          5. Completed → RFENDTC at Week 24
+        """
         all_records = []
         counts = self._assign_sites()
         country_lookup = {site["site_id"]: site["country"] for site in SITES}
@@ -77,7 +95,8 @@ class DemographicsGenerator(BaseGenerator):
                 record["SITEID"] = site_id
                 record["COUNTRY"] = country
 
-                rfstdtc = STUDY["start_date"] + timedelta(days=self.rng.randint(0, 180))
+                rfstdtc_date = STUDY["start_date"] + timedelta(days=self.rng.randint(0, 180))
+                rfstdtc = self.random_clinic_time(rfstdtc_date, lab=False)
                 if self.rng.random() < self.screen_failure_rate:
                     # screen failure assignment 
                     record["DSDECOD"] = self.weighted_choice(SCREEN_FAILURE_REASONS)
@@ -85,20 +104,32 @@ class DemographicsGenerator(BaseGenerator):
                     record["ARM"] = None
                     record["RFSTDTC"] = None
                     record["RFENDTC"] = None
+                    record["DMDTC"] = self.format_datetime(self.random_clinic_time(
+                    STUDY["start_date"] + timedelta(days=self.rng.randint(0, 180)), lab=False))
+                    record["DMDY"] = None
+                    record["DSSTDTC"] = self.format_date(STUDY["start_date"] + timedelta(days=self.rng.randint(0, 180)))
                 else:
                     # enrolled assignements
+                    record.update(self._assign_arms())
                     if self.rng.random() < self.discontinuation_rate:
                         # discontinued assignment 
-                        record.update(self._assign_arms())
                         record["DSDECOD"] = self.weighted_choice(DISCONTINUATION_REASONS)
-                        record["RFSTDTC"] = rfstdtc
-                        record["RFENDTC"] = rfstdtc + timedelta(days=self.rng.randint(1,168))
+                        record["RFSTDTC"] = self.format_datetime(rfstdtc)
+                        record["_rfstdtc_dt"] = rfstdtc
+                        rfendtc = self.random_clinic_time(rfstdtc_date + timedelta(days=self.rng.randint(1, 168)), lab=False)
+                        record["RFENDTC"] = self.format_datetime(rfendtc)
+                        record["_rfendtc_dt"] = rfendtc
                     else:
                         # completed
-                        record.update(self._assign_arms())
                         record["DSDECOD"] = "COMPLETED"
-                        record["RFSTDTC"] = rfstdtc
-                        record["RFENDTC"] = rfstdtc + timedelta(days=168)
+                        record["RFSTDTC"] = self.format_datetime(rfstdtc)
+                        record["_rfstdtc_dt"] = rfstdtc
+                        rfendtc = self.random_clinic_time(rfstdtc_date + timedelta(days=168), lab=False)
+                        record["RFENDTC"] = self.format_datetime(rfendtc)
+                        record["_rfendtc_dt"] = rfendtc
+                    record["DMDTC"] = self.format_datetime(self.random_clinic_time(rfstdtc.date() if isinstance(rfstdtc, datetime) else rfstdtc, lab=False))
+                    record["DMDY"] = 1  # collected on Day 1
+                    record["DSSTDTC"] = self.format_date(rfendtc)
                 
                 all_records.append(record)
 
