@@ -54,7 +54,7 @@ class LabGenerator(BaseGenerator):
                     record["LBSTRESU"] = lab["unit"]  
                     
                     # Generate value from normal distribution
-                    lb_value = round(self.rng.gauss(lab["mean"], lab["sd"]), 1)
+                    lb_value = round(max(0, self.rng.gauss(lab["mean"], lab["sd"])), 1)
                     record["LBORRES"] = str(lb_value)
                     record["LBSTRESN"] = lb_value            
                     record["LBSTRESC"] = str(lb_value)
