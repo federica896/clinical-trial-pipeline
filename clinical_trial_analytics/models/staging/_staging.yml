@@ -1,0 +1,90 @@
+models:
+  - name: stg_dm
+    description: "Cleaned demographics data with date casting and null standardisation. One record per screened subject."
+    columns:
+      - name: USUBJID
+        description: "Unique subject identifier (STUDYID-SITEID-SUBJID)"
+        tests:
+          - unique
+          - not_null
+      - name: SEX
+        tests:
+          - accepted_values:
+              arguments:
+                  values: ['M', 'F']
+      - name: RACE
+        tests:
+          - accepted_values:
+              arguments:
+                  values: ['WHITE', 'ASIAN', 'BLACK OR AFRICAN AMERICAN', 'AMERICAN INDIAN OR ALASKA NATIVE', 'OTHER']
+      - name: ETHNIC
+        tests:
+          - accepted_values:
+              arguments:
+                  values: ['HISPANIC OR LATINO', 'NOT HISPANIC OR LATINO']
+      - name: AGE
+        tests:
+          - not_null
+
+
+  - name: stg_ae
+    description: "Adverse events with date casting and derived AE duration. One record per AE per subject."
+    columns:
+      - name: USUBJID
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                  to: ref('stg_dm')
+                  field: USUBJID
+      - name: AESEV
+        tests:
+          - accepted_values:
+              arguments:
+                  values: ['MILD', 'MODERATE', 'SEVERE']
+      - name: AESER
+        tests:
+          - accepted_values:
+              arguments:
+                  values: ['Y', 'N']
+  
+
+  - name: stg_sv
+    description: "Subject visits with timestamp casting and protocol deviation flags. One record per visit per subject."
+    columns:
+      - name: USUBJID
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                  to: ref('stg_dm')
+                  field: USUBJID
+      - name: VISIT
+        tests:
+          - accepted_values: 
+              arguments:
+                  values: ['Screening', 'Baseline', 'Week 4', 'Week 8', 'Week 12', 'Week 16', 'Week 20', 'Week 24 / EOT', 'Follow-up (Week 28)']
+      
+
+
+  - name: stg_lb
+    description: "Laboratory results with timestamp casting. One record per test per visit per subject."
+    columns:
+      - name: USUBJID
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                  to: ref('stg_dm')
+                  field: USUBJID
+      - name: LBTESTCD
+        tests:
+          - accepted_values: 
+              arguments:
+                  values: ['HGB', 'WBC', 'PLAT', 'CREAT', 'ALT', 'AST']
+      - name: LBNRIND
+        tests:
+          - accepted_values: 
+              arguments:
+                  values: ['LOW', 'NORMAL', 'HIGH']
+      

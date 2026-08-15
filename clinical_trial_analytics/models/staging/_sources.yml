@@ -1,0 +1,9 @@
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: dm
+      - name: ae
+      - name: lb
+      - name: sv
+      - name: ts

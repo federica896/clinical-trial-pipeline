@@ -1,0 +1,12 @@
+models:
+  - name: mart_site_performance
+    description: "Per-site enrollment metrics: screened, enrolled, screen failure rate, completion rate."
+
+  - name: mart_ae_analysis
+    description: "AE rates and severity distribution by treatment arm."
+
+  - name: adsl
+    description: "ADaM-inspired subject-level analysis dataset. One record per enrolled subject with demographics, treatment, disposition, AE and lab summaries, and population flags (ITTFL, SAFFL)."
+
+  - name: adae
+    description: "ADaM-inspired AE analysis dataset. One record per AE enriched with subject demographics, treatment arm, treatment-emergent flag (TRTEMFL), and custom query flag (CQ01NAM)."

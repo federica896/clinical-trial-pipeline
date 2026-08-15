@@ -41,6 +41,10 @@ class VisitGenerator(BaseGenerator):
                 else:
                     # Normal: within window
                     visit_date = visdat + timedelta(days=self.rng.randint(-visit["window"], visit["window"]))
+
+                # Skip is window adjustment pushed visit past treatment end 
+                if visit_date > subject["_rfendtc_dt"]:
+                    continue
                 svstdtc = self.random_clinic_time(visit_date, lab=False)
                 svendtc = svstdtc + timedelta(hours=self.rng.randint(1,3))
 

@@ -53,7 +53,9 @@ class AdverseEventsGenerator(BaseGenerator):
 
                     # AE onset: random day during treatment period
                     treatment_days = (subject["_rfendtc_dt"] - subject["_rfstdtc_dt"]).days
-                    ae_date = (subject["_rfstdtc_dt"] + timedelta(days=self.rng.randint(0, treatment_days))).date()
+                    if treatment_days < 1:
+                        continue
+                    ae_date = (subject["_rfstdtc_dt"] + timedelta(days=self.rng.randint(1, treatment_days))).date()
                     aestdtc = self.random_clinic_time(ae_date, lab=False)
                     record["AESTDTC"] = self.format_datetime(aestdtc)
                     record["AESTDY"] = self.calc_study_day(aestdtc, subject["_rfstdtc_dt"])

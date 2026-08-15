@@ -1,0 +1,6 @@
+models:
+  - name: int_patient_ae_summary
+    description: "Per-subject AE summary: count, max severity, SAE flag, treatment-related flag. One record per enrolled subject with AEs."
+
+  - name: int_patient_lab_summary
+    description: "Per-subject lab summary: total tests, abnormal counts, abnormal percentage. One record per enrolled subject."
