@@ -1,0 +1,57 @@
+name: Clinical Trial Pipeline CI
+
+on: 
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate synthetic data
+        run: |
+          cd scripts
+          python generate_data.py
+
+      - name: Validate and load to DuckDB
+        run: |
+          cd scripts
+          python ingest.py
+      
+      - name: Configure dbt profile
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml << 'EOF'
+          clinical_trial_analytics:
+            target: dev
+            outputs:
+              dev:
+                type: duckdb
+                path: ${{ github.workspace }}/data/clinical_trial.duckdb
+          EOF
+
+      - name: Run dbt models
+        run: |
+          cd clinical_trial_analytics
+          dbt run
+
+      - name: Run dbt tests
+        run: |
+          cd clinical_trial_analytics
+          dbt test
