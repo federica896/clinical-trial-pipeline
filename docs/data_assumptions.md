@@ -1,6 +1,6 @@
 # Data Generation Assumptions: Evidence Base
 
-This document provides the evidence base for every parameter used in the ClinicalTrialPipe synthetic data generator. Each assumption is traced to published literature or documented as an operational norm. Parameters without published evidence are clearly marked.
+This document provides the evidence base for every parameter used in the ClinicalTrialPipe synthetic data generator. Each assumption is traced to published literature or documented as an operational norm. Parameters without published evidence are marked.
 
 *Last updated: March 2026*
 
@@ -18,7 +18,7 @@ In genitourinary Phase III cancer trials, the mean screen failure rate was 25–
 
 A multi-center analysis of early-phase oncology trials across three French cancer centers (2020–2022) reported screen failure rates of 21–26% (Gustave Roussy, Oncopole Toulouse, Centre Léon Bérard; published in ScienceDirect 2025).
 
-**Rationale for 25%:** We select 25% as a mid-range estimate consistent with Phase III solid tumor trials. This is conservative relative to the 36% industry average but representative of well-designed oncology trials with established inclusion criteria.
+**Rationale for 25%:** Selected 25% as a mid-range estimate consistent with Phase III solid tumor trials. This is conservative relative to the 36% industry average but representative of well-designed oncology trials with established inclusion criteria.
 
 ---
 
@@ -41,7 +41,7 @@ A multi-center French analysis (2020–2022, N=202 screen failures) found the fo
 
 A study of genitourinary Phase III trials reported that 91% of screen failures in prostate cancer trials and 84% in renal cancer trials were due to ineligibility (Wong et al., 2016).
 
-**Rationale:** Our distribution consolidates clinical/radiological/PS reasons under "eligibility criteria" (60%) since these all reflect protocol inclusion/exclusion failures. Lab values are separated (15%) as they represent a distinct operational category relevant to our lab domain. Patient refusal (20%) aligns with the 20–39% range reported across studies. "Other" (5%) covers administrative/logistic reasons.
+**Rationale:** The chosen distribution consolidates clinical/radiological/PS reasons under "eligibility criteria" (60%) since these all reflect protocol inclusion/exclusion failures. Lab values are separated (15%) as they represent a distinct operational category relevant to our lab domain. Patient refusal (20%) aligns with the 20–39% range reported across studies. "Other" (5%) covers administrative/logistic reasons.
 
 ---
 
@@ -57,7 +57,7 @@ A JNCCN analysis of Phase III oncology trials supporting FDA approvals found tha
 
 An ASCO abstract analyzing Phase III oncology trial dropout across 5 cancer centers in British Columbia (1999–2013) found that dropout was mainly attributable to toxicities, with rates varying by tumor type — lung cancer had the highest dropout (82%) and breast cancer the lowest (28%) (Malhi et al., J Clin Oncol 2015; 33:15_suppl, e17731).
 
-**Rationale for 15%:** We model 15% non-progression discontinuation. In real trials, disease progression is the largest single driver of discontinuation (~60–70%), but since our synthetic data does not model tumor response/progression, we focus on the remaining causes. The 15% rate aligns with the lower end of non-progression discontinuation reported in the literature and is appropriate for a 24-week treatment period.
+**Rationale for 15%:** Project models 15% non-progression discontinuation. In real trials, disease progression is the largest single driver of discontinuation (~60–70%), but since the synthetic data does not model tumor response/progression, it focuses on the remaining causes. The 15% rate aligns with the lower end of non-progression discontinuation reported in the literature and is appropriate for a 24-week treatment period.
 
 ---
 
@@ -84,7 +84,7 @@ In RCTs using placebo or best supportive care as control (N=47), placebo discont
 
 The IMvigor010 trial reported that in the observation arm, 20.5% of patients were censored due to consent withdrawal, protocol violation/noncompliance, or lost to follow-up combined (Cancer, 2021).
 
-**Rationale:** Our distribution weights adverse events most heavily (40%) consistent with the literature showing toxicity as the primary non-progression discontinuation driver. Consent withdrawal (20%) and physician decision (15%) together represent the next tier. Lost to follow-up (10%) and protocol deviation (10%) are less common in well-run Phase III trials but occur at meaningful rates. This distribution applies only to the ~15% who discontinue, so the absolute rates (e.g., AE discontinuation = 40% × 15% = 6% of enrolled) are consistent with published data.
+**Rationale:** The distribution weights adverse events most heavily (40%) consistent with the literature showing toxicity as the primary non-progression discontinuation driver. Consent withdrawal (20%) and physician decision (15%) together represent the next tier. Lost to follow-up (10%) and protocol deviation (10%) are less common in well-run Phase III trials but occur at meaningful rates. This distribution applies only to the ~15% who discontinue, so the absolute rates (e.g., AE discontinuation = 40% × 15% = 6% of enrolled) are consistent with published data.
 
 ---
 
@@ -94,11 +94,11 @@ The IMvigor010 trial reported that in the observation arm, 20.5% of patients wer
 
 **Evidence:**
 
-AE rates vary substantially by compound and tumor type. Our rates are drawn from the protocol's fictional Phase II data (Section 9.4) and are broadly consistent with published Phase III oncology trials where Grade 1–4 all-cause AE rates typically range from 30–90% depending on the compound.
+AE rates vary substantially by compound and tumor type. The rates are drawn from the protocol's fictional Phase II data (Section 9.4) and are broadly consistent with published Phase III oncology trials where Grade 1–4 all-cause AE rates typically range from 30–90% depending on the compound.
 
 The Annals of Oncology analysis found that grade 3/4 AEs related to placebo or best supportive care occurred in approximately 25% of patients, confirming that placebo arms are not AE-free.
 
-**Rationale:** Our per-AE-term rates from the protocol (Section 9.4) produce overall AE incidences within plausible ranges. The active-to-placebo differential is the clinically meaningful signal our dashboard is designed to detect. Exact rates are fictional but structurally realistic.
+**Rationale:** The per-AE-term rates from the protocol (Section 9.4) produce overall AE incidences within plausible ranges. The active-to-placebo differential is the clinically meaningful signal our dashboard is designed to detect. Exact rates are fictional but structurally realistic.
 
 ---
 

@@ -317,7 +317,7 @@ One interim analysis for futility is planned after 50% of the expected OS events
 
 All clinical data will be collected using a validated EDC system. Data will be entered by authorized site personnel per CDASH-aligned eCRF specifications.
 
-### 12.2 Data Standards
+### 12.2 Data Standards 
 
 - Data collection: CDASH v2.2
 - Tabulation datasets: CDISC SDTM v1.7 / SDTMIG v3.3

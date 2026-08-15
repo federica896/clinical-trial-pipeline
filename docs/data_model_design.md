@@ -21,7 +21,7 @@ Per the SDTM standard and SAS V5 transport file (XPT) format requirements:
 | Date/time values | Char, ISO 8601 format | Stored as character strings (e.g., "2024-01-15" or "2024-01-15T10:30:00") |
 | Controlled terms | Uppercase | Per CDISC Controlled Terminology (CT) |
 
-> **Note on this project:** Since we are building an analytics pipeline in DuckDB (not generating XPT files for regulatory submission), dates are stored as VARCHAR in the raw layer per SDTM convention, then cast to native DATE types in the dbt staging layer. Character lengths are documented for reference but not enforced at the database level.
+> **Note on this project:** Since the project aims to build an analytics pipeline in DuckDB (not generating XPT files for regulatory submission), dates are stored as VARCHAR in the raw layer per SDTM convention, then cast to native DATE types in the dbt staging layer. Character lengths are documented for reference but not enforced at the database level.
 
 > **CT notation:** `*` = sponsor-defined terms permitted; `**` = external dictionary (e.g., MedDRA)
 
@@ -69,7 +69,7 @@ DM is a special-purpose domain with a fixed structure. One record per subject.
 | DSDECOD | Disposition Decoded | Char | 20 | CT: NCOMPLT * | Completed / Discontinued / Screen Failure / Ongoing |
 | DSSTDTC | Disposition Date | Char | 10 | ISO 8601 date | |
 
-> **Deviation note:** In a real submission, disposition data belongs in the DS domain. We include DSDECOD/DSSTDTC here for simplicity in our analytics pipeline and document this deviation.
+> **Deviation note:** In a real submission, disposition data belongs in the DS domain. This project includes DSDECOD/DSSTDTC here for simplicity in our analytics pipeline and document this deviation.
 
 ---
 
@@ -122,7 +122,7 @@ Variable order: Identifiers → Topic → Qualifiers → Timing. One record per 
 | 17 | LBDTC | Date/Time of Specimen Collection | Timing | Char | 19 | ISO 8601 | Exp |
 | 18 | LBDY | Study Day of Specimen Collection | Timing | Num | 8 | Derived | Perm |
 
-> **Note on result fields:** SDTM requires both original (LBORRES/LBORRESU) and standard (LBSTRESN/LBSTRESC/LBSTRESU) result representations. In our synthetic data, original and standard values are identical since no unit conversion is needed. Normal range limits (LBORNRLO/LBORNRHI) are stored as Char per SDTM convention, even when values are numeric.
+> **Note on result fields:** SDTM requires both original (LBORRES/LBORRESU) and standard (LBSTRESN/LBSTRESC/LBSTRESU) result representations. In this synthetic data, original and standard values are identical since no unit conversion is needed. Normal range limits (LBORNRLO/LBORNRHI) are stored as Char per SDTM convention, even when values are numeric.
 
 ---
 
@@ -146,7 +146,7 @@ SV is a special-purpose domain. One record per subject per actual visit.
 |----------|-------|-----------|--------|-------------|-------|
 | SVUPDES | Unplanned Visit Description | Char | 200 | Free text | Used to flag protocol deviations |
 
-> **Deviation note:** SVUPDES is a standard SDTM variable but is typically used for unscheduled visits. We repurpose it to flag visit window deviations for our analytics.
+> **Deviation note:** SVUPDES is a standard SDTM variable but is typically used for unscheduled visits. The project repurposes it to flag visit window deviations for the analytics.
 
 ---
 

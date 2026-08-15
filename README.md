@@ -1,6 +1,8 @@
 # ClinicalTrialPipe
 
-**A modern, end-to-end data pipeline for clinical trial safety analytics, covering SDTM transformation through ADaM-inspired analysis datasets to interactive monitoring.**
+[![CI](https://github.com/federica896/clinical-trial-pipeline/actions/workflows/pipeline.yml/badge.svg)](https://github.com/federica896/clinical-trial-pipeline/actions/workflows/pipeline.yml)
+
+**An end-to-end data pipeline for clinical trial safety analytics, covering SDTM transformation through ADaM-inspired analysis datasets to interactive monitoring.**
 
 Built with Python · dbt · DuckDB · Pandera · Streamlit
 
@@ -14,15 +16,13 @@ The typical workflow looks like this:
 
 - Raw data arrives in inconsistent formats with missing values, out-of-window visits, and coding errors
 - Validation is done through ad-hoc scripts or manual review, often catching issues late in the process
-- Transformation logic lives in scattered SAS programs with little documentation or version control
+- Transformation logic lives in SAS programs with little documentation or version control
 - Safety teams wait days or weeks for updated reports while data sits in a queue
-- When regulators ask "how was this number derived?", tracing back through the pipeline is painful
-
-This is not a hypothetical — it is the daily reality across CROs and pharmaceutical companies managing clinical trials under FDA, EMA, and PMDA oversight.
+- When regulators ask "how was this number derived?", tracing back through the pipeline is difficult
 
 ## Where This Fits in the Clinical Data Lifecycle
 
-Clinical trial data passes through a well-defined lifecycle before it reaches regulatory reviewers. Understanding this full picture is critical to knowing what this project does — and what it deliberately does not.
+Clinical trial data passes through a well-defined lifecycle before it reaches regulatory reviewers.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -79,12 +79,12 @@ Clinical trial data passes through a well-defined lifecycle before it reaches re
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-**What we cover:** The SDTM transformation, ADaM-inspired analysis dataset creation, and analytics/monitoring layers: the segment where modern data engineering tools (dbt, DuckDB) offer the most value over legacy SAS-based workflows.
+**What it covers:** The SDTM transformation, ADaM-inspired analysis dataset creation, and analytics/monitoring layers: the segment where modern data engineering tools (dbt, DuckDB) offer the most value over legacy SAS-based workflows.
 
-**What we intentionally do not cover:**
+**What it does not cover:**
 - EDC system configuration and site data entry (Medidata Rave, Veeva CDMS, etc.)
 - Data management activities: query resolution, medical coding, edit checks, reconciliation
-- Full ADaM compliance (our analysis datasets follow ADaM conventions but are not submission-ready)
+- Full ADaM compliance (the analysis datasets follow ADaM conventions but are not submission-ready)
 - XPT file generation or Define-XML authoring for regulatory submission
 - TLF production (Tables, Listings, Figures) for Clinical Study Reports
 
@@ -92,24 +92,24 @@ The upstream (EDC/data management) and downstream (submission packaging) steps a
 
 ## The Solution
 
-ClinicalTrialPipe demonstrates how modern data engineering practices can improve the SDTM-to-analytics segment of the clinical data lifecycle. It is a fully automated, reproducible pipeline that takes raw CDISC SDTM-aligned clinical trial data and transforms it into validated, analysis-ready datasets with complete lineage and real-time monitoring.
+ClinicalTrialPipe uses modern data engineering practices to improve the SDTM-to-analytics segment of the clinical data lifecycle. It is a fully automated, reproducible pipeline that takes raw CDISC SDTM-aligned clinical trial data and transforms it into validated, analysis-ready datasets with complete lineage and real-time monitoring.
 
 **What it does:**
 
 - **Validates on ingestion**: Pandera schema checks catch data type errors, missing required fields, and invalid coded values before anything enters the database
-- **Transforms with full traceability**: dbt models apply standardized business logic (deriving patient age, calculating AE duration, classifying safety risk) with version-controlled SQL that self-documents its lineage
+- **Transforms with full traceability**: dbt models apply standardised business logic (deriving patient age, calculating AE duration, classifying safety risk) with version-controlled SQL that self-documents its lineage
 - **Produces ADaM-inspired analysis datasets**: ADSL and ADAE models follow ADaM naming conventions with proper population flags (SAFFL, ITTFL), treatment variables (TRTA/TRTP), and baseline derivations, bridging the gap between SDTM tabulation and statistical analysis
-- **Tests continuously**: 20+ automated data quality tests verify referential integrity, value ranges, and clinical logic (e.g., adverse events cannot start before enrollment)
-- **Monitors quality over time**: quality reports track validation metrics across pipeline runs, not just pass/fail snapshots
+- **Tests continuously**: automated data quality tests to verify referential integrity, value ranges, and clinical logic (e.g., adverse events cannot start before enrollment)
+- **Monitors quality over time**: quality reports track validation metrics across pipeline runs
 - **Delivers insights immediately**: an interactive Streamlit dashboard gives safety teams real-time visibility into enrollment, adverse events, lab trends, and site performance
 
 **What makes it realistic:**
 
-The synthetic data is not a toy dataset. It models a Phase III oncology trial with 1,200 screened subjects across 12 sites, including screen failures, early discontinuations, protocol deviations, missing lab values, and treatment-arm-dependent adverse event rates with the same complexity you encounter in real trials.
+The synthetic data models a Phase III oncology trial with 1,200 screened subjects across 12 sites, including screen failures, early discontinuations, protocol deviations, missing lab values, and treatment-arm-dependent adverse event rates with the same complexity of real trials.
 
-## A Note on Technology Choices and the Regulatory Landscape
+## Technology Choices and the Regulatory Landscape
 
-This project uses dbt, DuckDB, and Python, not SAS, which remains the dominant tool for regulatory submissions. This is intentional.
+This project uses dbt, DuckDB, and Python, not SAS, which remains the dominant tool for regulatory submissions. 
 
 The regulatory landscape is shifting. While FDA and PMDA still require SAS V5 transport (XPT) files for submission, the industry is actively exploring alternatives. CDISC has developed Dataset-XML as a potential replacement, and packages like R's `sdtm.oak` (sponsored by CDISC COSA with contributions from Roche, Pfizer, GSK, Vertex, and Merck) demonstrate that the pharmaverse is moving toward open-source tooling.
 
@@ -117,7 +117,7 @@ This project is positioned for the emerging workflow where:
 - **SAS** handles the final-mile submission packaging (XPT generation, Define-XML)
 - **Modern data engineering tools** (dbt, Python, cloud databases) handle the transformation, testing, documentation, and monitoring layers, where they offer significant advantages in reproducibility, version control, and collaboration
 
-The goal is not to replace SAS for regulatory submission, but to demonstrate that the transformation and analytics layers benefit from modern engineering practices that SAS-based workflows often lack: automated testing, DAG-based dependency management, git-native version control, and self-documenting lineage.
+The goal is to demonstrate that the transformation and analytics layers benefit from modern engineering practices that SAS-based workflows often lack: automated testing, DAG-based dependency management, git-native version control, and self-documenting lineage.
 
 ## Who This Is For
 
@@ -194,7 +194,7 @@ dbt Intermediate Models ── patient AE summaries, lab summaries
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/clinical-trial-pipeline.git
+git clone https://github.com/federica896/clinical-trial-pipeline.git
 cd clinical-trial-pipeline
 
 # Create virtual environment
@@ -211,7 +211,7 @@ python scripts/generate_data.py
 python scripts/ingest.py
 
 # Run dbt pipeline
-cd dbt_project/clinical_trial_analytics
+cd clinical_trial_analytics
 dbt deps
 dbt run
 dbt test
@@ -221,7 +221,7 @@ dbt docs generate
 dbt docs serve
 
 # Launch dashboard
-cd ../..
+cd ..
 streamlit run dashboard/app.py
 ```
 
@@ -229,13 +229,12 @@ streamlit run dashboard/app.py
 
 ```
 clinical-trial-pipeline/
-├── .github/workflows/dbt_ci.yml    # CI/CD pipeline
+├── .github/workflows/pipeline.yml    # CI/CD pipeline
 ├── dashboard/app.py                 # Streamlit safety dashboard
 ├── data/
 │   ├── raw/                         # Generated SDTM-aligned CSVs
 │   └── quality_reports/             # Quality monitoring outputs
-├── dbt_project/
-│   └── clinical_trial_analytics/
+│── clinical_trial_analytics/
 │       ├── models/
 │       │   ├── staging/             # stg_dm, stg_ae, stg_lb, stg_sv
 │       │   ├── intermediate/        # Patient AE + lab summaries
@@ -243,12 +242,21 @@ clinical-trial-pipeline/
 │       │   └── adam/                # ADaM-inspired: adsl, adae
 │       └── tests/                   # Custom singular tests
 ├── scripts/
+│   ├── config.py                    # Trial configuration (all parameters)
+│   ├── schemas.py                   # Pandera validation schemas
 │   ├── generate_data.py             # CDISC-aligned synthetic data generator
 │   ├── ingest.py                    # Pandera-validated DuckDB ingestion
-│   └── quality_monitor.py           # Quality metrics tracking
+│   └── generators/                  # Domain-specific data generators
+│       ├── base.py
+│       ├── demographics.py
+│       ├── adverse_events.py
+│       ├── lab_results.py
+│       ├── visits.py
+│       └── trial_summary.py
 ├── docs/
 │   ├── data_model_design.md         # Full SDTM data model specification
-│   └── clinical_data_lifecycle.md   # Where this project fits in pharma
+│   ├── protocol_synopsis.md         # ICH E6(R3) trial design
+│   └── data_assumptions.md          # Evidence base for parameters
 ├── requirements.txt
 └── README.md
 ```
@@ -291,9 +299,29 @@ dbt test  # Runs all 20+ tests
 # - ADaM derivation checks (population flags consistent with disposition)
 ```
 
+## Pipeline DAG
+
+![dbt DAG](docs/images/dbt_dag.png)
+
+## Dashboard
+
+| Enrollment Overview | Adverse Events |
+|---|---|
+| ![Enrollment](docs/images/dashboard_enrollment.png) | ![AE](docs/images/dashboard_ae.png) |
+
+| Laboratory Monitoring | Site Performance |
+|---|---|
+| ![Labs](docs/images/dashboard_labs.png) | ![Sites](docs/images/dashboard_site.png) |
+
+## Documentation
+
+- [SDTM Data Model](docs/data_model_design.md) — variable attributes, controlled terminology, design decisions
+- [Protocol Synopsis](docs/protocol_synopsis.md) — ICH E6(R3)-aligned trial design (ONCO-2024-001 / MERIDIAN-3)
+- [Data Assumptions](docs/data_assumptions.md) — evidence base for all synthetic data parameters
+
 ## Scope Boundaries and Future Extensions
 
-This project deliberately focuses on the transformation-to-analytics segment. Potential extensions that would move it toward full lifecycle coverage:
+This project focuses on the transformation-to-analytics segment. Potential extensions that would move it toward full lifecycle coverage:
 
 - **Upstream:** Integration with CDISC ODM/Dataset-XML for EDC data import
 - **ADaM compliance:** Full ADLB, ADTTE datasets with LOCF imputation, visit windowing, and parameter derivations
