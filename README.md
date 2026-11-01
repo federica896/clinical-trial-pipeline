@@ -92,7 +92,7 @@ The upstream (EDC/data management) and downstream (submission packaging) steps a
 
 ## The Solution
 
-ClinicalTrialPipe uses modern data engineering practices to improve the SDTM-to-analytics segment of the clinical data lifecycle. It is a fully automated, reproducible pipeline that takes raw CDISC SDTM-aligned clinical trial data and transforms it into validated, analysis-ready datasets with complete lineage and real-time monitoring.
+ClinicalTrialPipe uses modern data engineering practices to improve the SDTM-to-analytics segment of the clinical data lifecycle. It is a fully automated, reproducible pipeline that takes raw CDISC SDTM-aligned clinical trial data and transforms it into validated, analysis-ready datasets with complete lineage and on-demand safety monitoring.
 
 **What it does:**
 
@@ -101,7 +101,7 @@ ClinicalTrialPipe uses modern data engineering practices to improve the SDTM-to-
 - **Produces ADaM-inspired analysis datasets**: ADSL and ADAE models follow ADaM naming conventions with proper population flags (SAFFL, ITTFL), treatment variables (TRTA/TRTP), and baseline derivations, bridging the gap between SDTM tabulation and statistical analysis
 - **Tests continuously**: automated data quality tests to verify referential integrity, value ranges, and clinical logic (e.g., adverse events cannot start before enrollment)
 - **Monitors quality over time**: quality reports track validation metrics across pipeline runs
-- **Delivers insights immediately**: an interactive Streamlit dashboard gives safety teams real-time visibility into enrollment, adverse events, lab trends, and site performance
+- **Delivers insights immediately**: an interactive Streamlit dashboard gives safety teams an interactive view of enrollment, adverse events, lab trends, and site performance
 
 **What makes it realistic:**
 
