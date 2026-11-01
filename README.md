@@ -52,7 +52,7 @@ Clinical trial data passes through a well-defined lifecycle before it reaches re
 │  │   ┌─────────────────────────────────────────────────────────┐  │  │
 │      │              SDTM TRANSFORMATION                        │     │
 │  │   │  Raw/cleaned data ──→ CDISC SDTM domains               │  │  │
-│      │  (DM, AE, LB, SV + Define-XML metadata)                │     │
+│      │  (DM, AE, LB, SV)                │     │
 │  │   └──────────────────────────┬──────────────────────────────┘  │  │
 │                                 │                                     │
 │  │                              ▼                                  │  │
